@@ -7,6 +7,9 @@ class SnakeModel:
         self.height = height
         self.width = width
         self.game_over = False
+        self.score = 0
+        
+        self.movement_locked = False
 
         #Throw exception if board too small in future
         start_x = random.randint(10, width-10)
@@ -38,11 +41,13 @@ class SnakeModel:
         
         self.snake.insert(0, new_head)
 
-        if(new_head.x == self.current_point_location.x and new_head.y == self.current_point_location.y):
-            #increase score
+        if(new_head.collides(self.current_point_location)):
+            self.score += 10
             self.generate_point()
         else:
             self.snake.pop()
+
+        self.movement_locked = False
             
 
     def check_game_over(self, new_head):
@@ -51,9 +56,16 @@ class SnakeModel:
         if(new_head.x < 0 or new_head.x >= self.width or new_head.y < 0 or new_head.y >= self.height):
             return True
         
+        for i in range(len(self.snake) - 1):
+            if new_head.collides(self.snake[i]):
+                return True
+
         return False
 
     def set_direction(self, direction):
+        
+        if(self.movement_locked):
+            return
 
         if(direction == Direction.UP and self.current_direction == Direction.DOWN):
             return
@@ -65,6 +77,7 @@ class SnakeModel:
             return
 
         self.current_direction = direction
+        self.movement_locked = True
 
     def generate_point(self):
         
@@ -72,12 +85,14 @@ class SnakeModel:
         
         while not valid_location_found:
             
-            x = random.randint(10, self.width-10)
-            y = random.randint(10, self.height-10)
+            x = random.randint(0, self.width - 1)
+            y = random.randint(0, self.height - 1)
+
+            point_location = Location(x,y)
 
             valid_location_found = True
             for location in self.snake:
-                if(location.x == x and location.y == y):
+                if(point_location.collides(location)):
                     valid_location_found = False
                     break
         
@@ -90,6 +105,9 @@ class Location:
     def __init__(self, x, y):
         self.x = x
         self.y = y
+
+    def collides(self, other_location):
+        return self.x == other_location.x and self.y == other_location.y
 
 class Direction(Enum):
     UP = 1
