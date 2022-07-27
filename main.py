@@ -29,6 +29,9 @@ while not done:
             if event.type == pygame.QUIT:  # If user clicked on close symbol     
                 done = True  # done variable that we are complete, so we exit this loop    
             if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_r and model.game_over:
+                    model = SnakeModel(game_height, game_width)
+                    view.draw(model)
                 if event.key == pygame.K_UP:
                     model.set_direction(Direction.UP)
                 elif event.key == pygame.K_RIGHT:
