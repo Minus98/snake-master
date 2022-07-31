@@ -1,3 +1,4 @@
+from config import GAME_HEIGHT, GAME_WIDTH, SQUARE_SIZE
 import pygame    
 from model import SnakeModel, Direction
 from draw import View
@@ -7,18 +8,15 @@ pygame.init()
 done = False    
 clock = pygame.time.Clock()
 
-game_height = 25
-game_width = 25 
-
-model = SnakeModel(game_height, game_width)
+model = SnakeModel(GAME_HEIGHT, GAME_WIDTH)
 
 # size variable is using for set screen size
-square_size = 40    
-size = [game_height * square_size, game_width * square_size]    
+  
+size = [GAME_HEIGHT * SQUARE_SIZE, GAME_WIDTH * SQUARE_SIZE]    
 screen = pygame.display.set_mode(size)    
-pygame.display.set_caption("Example program to draw geometry")    
+pygame.display.set_caption("Snek")    
 
-view = View(screen, square_size)
+view = View(screen, SQUARE_SIZE)
 view.draw(model)
 
 while not done:
@@ -30,7 +28,7 @@ while not done:
                 done = True  # done variable that we are complete, so we exit this loop    
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_r and model.game_over:
-                    model = SnakeModel(game_height, game_width)
+                    model = SnakeModel(GAME_HEIGHT, GAME_WIDTH)
                     view.draw(model)
                 if event.key == pygame.K_UP:
                     model.set_direction(Direction.UP)
