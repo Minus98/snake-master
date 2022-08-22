@@ -12,8 +12,8 @@ class SnakeModel:
         self.movement_locked = False
 
         #Throw exception if board too small in future
-        start_x = random.randint(10, width-10)
-        start_y = random.randint(10, height-10)
+        start_x = random.randint(2, width-2)
+        start_y = random.randint(2, height-2)
 
         self.snake = [Location(start_x, start_y)]
         self.current_direction = random.choice(list(Direction))
@@ -110,7 +110,7 @@ class Location:
         return self.x == other_location.x and self.y == other_location.y
 
 class Direction(Enum):
-    UP = 1
-    RIGHT = 2
-    DOWN = 3
-    LEFT = 4
+    UP = 0
+    RIGHT = 1
+    DOWN = 2
+    LEFT = 3

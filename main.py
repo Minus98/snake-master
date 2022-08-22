@@ -2,6 +2,7 @@ from config import GAME_HEIGHT, GAME_WIDTH, SQUARE_SIZE
 import pygame    
 from model import SnakeModel, Direction
 from draw import View
+import numpy as np
 
 pygame.init()    
 # done variable is using as flag     
@@ -12,7 +13,7 @@ model = SnakeModel(GAME_HEIGHT, GAME_WIDTH)
 
 # size variable is using for set screen size
   
-size = [GAME_HEIGHT * SQUARE_SIZE, GAME_WIDTH * SQUARE_SIZE]    
+size = [GAME_WIDTH * SQUARE_SIZE, GAME_HEIGHT * SQUARE_SIZE]    
 screen = pygame.display.set_mode(size)    
 pygame.display.set_caption("Snek")    
 

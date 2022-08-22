@@ -6,7 +6,7 @@ class View:
         self.screen = screen
         self.square_size = square_size
 
-    def draw(self, model):
+    def draw(self, model, display = True):
 
         # Clear the default screen background and set the white screen background    
         self.screen.fill((255, 255, 255))    
@@ -35,11 +35,13 @@ class View:
             game_over_text_rect.center = ( w // 2, h // 2)
 
             self.screen.blit(game_over_text, game_over_text_rect)
-        # This function must write after all the other drawing commands.    
+        # This function must write after all the other drawing commands.
 
-        score_text = font.render('Score: ' + str(model.score), True, (0,128,0))
-        score_text_rect = score_text.get_rect()
-        score_text_rect.topright = (w, 0)
-        self.screen.blit(score_text, score_text_rect)
-
-        pygame.display.flip()
+        if display:
+            score_text = font.render('Score: ' + str(model.score), True, (0,128,0))
+            score_text_rect = score_text.get_rect()
+            score_text_rect.topright = (w, 0)
+            self.screen.blit(score_text, score_text_rect)
+            pygame.display.flip()
+        else:
+            pygame.event.pump()
